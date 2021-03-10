@@ -1,0 +1,23 @@
+.Home {
+  .home-container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 11vw 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+  }
+
+  main {
+    grid-area: main;
+  }
+
+  header {
+    grid-area: header;
+  }
+
+  aside {
+    grid-area: sidebar;
+  }
+}

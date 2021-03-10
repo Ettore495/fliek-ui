@@ -8,12 +8,14 @@ function SignIn() {
       <form>
         <Logo />
 
+        <h4 className="mb-4">Sign in</h4>
+
         <input type="email" id="inputEmail" className="form-control" required placeholder="Email address" autoFocus />
         <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
 
         <p className="mt-4">Don't have an account? <a href="/sign-up">Sign up</a></p>
 
-        <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">Sign in</button>
+        <button className="btn btn-md btn-primary btn-block mt-4" type="submit">Sign in</button>
       </form>
     </div>
   );
