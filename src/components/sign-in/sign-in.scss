@@ -1,0 +1,16 @@
+.sign-in {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  form {
+    width: 30vw;
+
+    img {
+      height: 10rem;
+    }
+  }
+}
