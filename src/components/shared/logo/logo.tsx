@@ -4,8 +4,8 @@ import './logo.scss'
 
 function Logo() {
     return(
-        <div className="Logo">
-            <img className="mb-4" src={logo} alt="logo" />
+        <div className="Logo mb-4">
+            <img width="72" height="72" src={logo} alt="logo" />
             <h2>Fliek</h2>
         </div>
     );
