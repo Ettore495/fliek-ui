@@ -1,41 +1,117 @@
-import React from 'react';
-import Logo from '../shared/logo/logo'
-import './register.scss'
+import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import Logo from "../shared/logo/logo";
+import { REGISTER } from "../../mutations/register/register";
+import "./register.scss";
+import { useHistory } from "react-router-dom";
+import { Button, Col, Form, InputGroup } from "react-bootstrap";
 
 function Register() {
+  const history = useHistory();
+
+  const [registerUser, { loading, error, data }] = useMutation(REGISTER);
+
+  const [validated, setValidated] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = (event: any) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+
+    registerUser({
+      variables: {
+        firstname: firstName,
+        lastname: lastName,
+        username: userName,
+        password: password,
+      },
+    })
+      .then((result) => {
+        console.log(result);
+        history.push("/sign-in");
+      })
+      .catch((err) => {});
+  };
+
   return (
     <div className="sign-in register">
-      <form>
       <Logo />
 
       <h4 className="mb-4">Create your account</h4>
 
-      <div className="mb-3">
-        <label htmlFor="inputFirstName" className="form-label">First name</label>
-        <input type="text" id="inputFirstName" className="form-control" placeholder="Minimum 2 characters" required />
-        {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="inputLastName" className="form-label">Last name</label>
-        <input type="text" id="inputLastName" className="form-control" placeholder="Minimum 2 characters" required />
-        {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="inputEmail" className="form-label">Email address</label>
-        <input type="email" id="inputEmail" className="form-control" required placeholder="Must be a valid email" autoFocus />
-        {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-      </div>
-        
-      <div className="mb-3">
-          <label htmlFor="inputPassword" className="form-label">Password</label>
-          <input type="password" id="inputPassword" className="form-control" placeholder="Minimum 8 characters" required />
-          {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-      </div>
-
-        <button className="btn btn-md btn-primary btn-block mt-4" type="submit">Sign in</button>
-      </form>
+      <Form noValidate validated={validated} onSubmit={handleRegister}>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationCustom01">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="First name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid name
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationCustom01">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Last name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid last name
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationCustom01">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              required
+              type="email"
+              placeholder="Email"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid email
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationCustom01">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid password
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Form.Row>
+        <Button className="w-100" type="submit">
+          Sign up
+        </Button>
+      </Form>
     </div>
   );
 }
