@@ -1,0 +1,36 @@
+@import "../../../src/assets/css/theme.scss";
+
+$table-border-radius: 20px;
+
+.Movies {
+  table {
+    text-align: left;
+
+    thead {
+      th {
+        color: $secondary-text-color;
+        font-size: small;
+      }
+    }
+
+    tbody {
+      font-size: small;
+      tr {
+        cursor: pointer;
+        border-bottom: 1px solid lightgray;
+      }
+
+      .options-dropdown {
+        text-align: right;
+
+        svg {
+          height: 1rem;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
