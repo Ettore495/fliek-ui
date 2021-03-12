@@ -4,7 +4,7 @@ import Logo from "../shared/logo/logo";
 import { REGISTER } from "../../mutations/register/register";
 import "./register.scss";
 import { useHistory } from "react-router-dom";
-import { Button, Col, Form, InputGroup } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 
 function Register() {
   const history = useHistory();
@@ -49,7 +49,7 @@ function Register() {
 
       <Form noValidate validated={validated} onSubmit={handleRegister}>
         <Form.Row>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
             <Form.Label>First name</Form.Label>
             <Form.Control
               required
@@ -57,6 +57,7 @@ function Register() {
               placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              autoFocus
             />
             <Form.Control.Feedback type="invalid">
               Please provide a valid name
@@ -64,7 +65,7 @@ function Register() {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Form.Group as={Col} md="12" controlId="RegisterLastNameInput">
             <Form.Label>Last name</Form.Label>
             <Form.Control
               required
@@ -79,7 +80,7 @@ function Register() {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Form.Group as={Col} md="12" controlId="RegisterEmailNameInput">
             <Form.Label>Email</Form.Label>
             <Form.Control
               required
@@ -94,7 +95,7 @@ function Register() {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Form.Group as={Col} md="12" controlId="RegisterPasswordNameInput">
             <Form.Label>Password</Form.Label>
             <Form.Control
               required

@@ -26,7 +26,7 @@ function SignIn() {
 
       <Form noValidate validated={validated} onSubmit={handleRegister}>
         <Form.Row>
-          <Form.Group as={Col} md="12" controlId="validationCustom01">
+          <Form.Group as={Col} md="12">
             <Form.Control
               required
               type="email"
@@ -41,7 +41,6 @@ function SignIn() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              autoFocus
             />
           </Form.Group>
         </Form.Row>
