@@ -1,116 +1,107 @@
-import React, { Component } from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, { Component, useState } from "react";
+import { Button, Col, Form, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./movie-modal.scss";
 
-export default class MovieModal extends Component<
-  {
-    show: boolean;
-    handleClose: Function;
-  },
-  {
-    startDate: Date;
-  }
-> {
-  constructor(props: Readonly<{ show: boolean; handleClose: Function }>) {
-    super(props);
-    this.state = {
-      startDate: new Date(),
-    };
-  }
+function MovieModal(props: any) {
+  const [validated, setValidated] = useState(false);
+  const [movieName, setMovieName] = useState<string>("");
+  const [movieDuration, setMovieDuration] = useState<string>("");
+  const [movieActors, setMovieActors] = useState<string>("");
+  const [movieReleaseDate, setMovieReleaseDate] = useState<any | null>(
+    new Date()
+  );
 
-  render() {
-    return (
-      <div className="MovieModal">
-        <Modal
-          animation={false}
-          show={this.props.show}
-          onHide={this.props.handleClose}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Add a movie</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="mb-3">
-                <label htmlFor="inputFirstName" className="form-label">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="inputMovieName"
-                  className="form-control"
-                  placeholder="Minimum 2 characters"
+  const handleAddMovie = (event: any) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+  return (
+    <div className="MovieModal">
+      <Modal animation={false} show={props.show} onHide={props.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add a movie</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form noValidate validated={validated}>
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
+                <Form.Label>Movie name</Form.Label>
+                <Form.Control
                   required
+                  type="text"
+                  placeholder="Movie name"
+                  value={movieName}
+                  onChange={(e) => setMovieName(e.target.value)}
                 />
-                {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-              </div>
-
-              <div className="mb-3">
-                <label
-                  htmlFor="inputReleaseDate"
-                  className="form-label d-block"
-                >
-                  Release date
-                </label>
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid name
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
+                <Form.Label>Duration</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Movie duration"
+                  value={movieDuration}
+                  onChange={(e) => setMovieDuration(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid duration
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
+                <Form.Label>Release date</Form.Label>
                 <DatePicker
                   className="form-control"
-                  selected={this.state.startDate}
-                  onChange={(date) => this.setStartDate(date)}
+                  selected={movieReleaseDate}
+                  onChange={(date) => setMovieReleaseDate(date)}
                 />
-                {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="inputEmail" className="form-label">
-                  Duration
-                </label>
-                <input
-                  type="email"
-                  id="inputEmail"
-                  className="form-control"
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid date
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
+                <Form.Label>Actors</Form.Label>
+                <Form.Control
                   required
-                  placeholder="Must be a valid email"
-                  autoFocus
-                />
-                {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="inputMovieDuration" className="form-label">
-                  Actors
-                </label>
-                <input
                   type="text"
-                  id="inputMovieDuration"
-                  className="form-control"
-                  placeholder="Minimum 1 characters"
-                  required
+                  placeholder="Actors"
+                  value={movieActors}
+                  onChange={(e) => setMovieActors(e.target.value)}
                 />
-                {/* <div id="inputFirstName" className="form-text">We'll never share your email with anyone else.</div> */}
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => this.props.handleClose()}
-            >
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => this.props.handleClose()}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
-  }
-
-  setStartDate = (data: any) => {
-    this.setState({
-      startDate: data,
-    });
-  };
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid duration
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => props.handleClose()}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleAddMovie}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
 }
+
+export default MovieModal;
