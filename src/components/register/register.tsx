@@ -9,7 +9,7 @@ import { Button, Col, Form } from "react-bootstrap";
 function Register() {
   const history = useHistory();
 
-  const [registerUser, { loading, error, data }] = useMutation(REGISTER);
+  const [registerUser] = useMutation(REGISTER);
 
   const [validated, setValidated] = useState(false);
   const [firstName, setFirstName] = useState("");

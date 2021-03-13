@@ -9,7 +9,7 @@ import "./sign-in.scss";
 function SignIn() {
   const history = useHistory();
 
-  const [loginUser, { loading, error, data }] = useMutation(LOGIN);
+  const [loginUser] = useMutation(LOGIN);
 
   const [validated, setValidated] = useState(false);
   const [userName, setUserName] = useState("");
