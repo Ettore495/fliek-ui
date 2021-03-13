@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as DotsVerticalIcon } from "../../assets/icons/dots-vertical.svg";
+import { ReactComponent as TrashIcon } from "../../assets/icons/trash.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import "./movies.scss";
 import { Dropdown, Table } from "react-bootstrap";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
 import { useQuery } from "@apollo/client";
+import { IMovie } from "../../types/IMovie";
+import MovieModal from "../movie-modal/movie-modal";
 
 function Movies() {
   const { loading, error, data } = useQuery(GET_ALL_MOVIES);
   if (error) console.log(error);
   if (loading) console.log("loading");
 
+  const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
+  const [showMovieModal, setShowMovieModal] = useState<Boolean>(false);
+
+  const handleSelectMovie = (movie: IMovie) => {
+    setSelectedMovie(movie);
+    setShowMovieModal(true);
+  };
+
+  const handleDeleteMovie = (movie: IMovie) => {
+    // TODO - delete movie
+  };
+
   return (
     <div className="Movies">
+      <MovieModal
+        show={showMovieModal}
+        handleClose={() => {
+          setShowMovieModal(false);
+        }}
+        movie={selectedMovie}
+      />
       <Table borderless hover>
         <thead>
           <tr>
@@ -25,7 +48,7 @@ function Movies() {
         </thead>
         <tbody>
           {data &&
-            data.getAllMovies.map((movie: any) => {
+            data.getAllMovies.map((movie: IMovie) => {
               return (
                 <tr key={movie.id}>
                   <td>{movie.name}</td>
@@ -40,12 +63,21 @@ function Movies() {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">
-                          Another action
+                        <Dropdown.Item
+                          onClick={() => {
+                            handleSelectMovie(movie);
+                          }}
+                        >
+                          <EditIcon />
+                          Edit
                         </Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">
-                          Something else
+                        <Dropdown.Item
+                          onClick={() => {
+                            handleDeleteMovie(movie);
+                          }}
+                        >
+                          <TrashIcon />
+                          Delete
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

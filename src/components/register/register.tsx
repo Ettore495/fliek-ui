@@ -12,12 +12,12 @@ function Register() {
   const [registerUser] = useMutation(REGISTER);
 
   const [validated, setValidated] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const handleRegister = (event: any) => {
+  const handleRegister = (event: any): void => {
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
