@@ -15,7 +15,12 @@ import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {
-  const { data } = useQuery(GET_ALL_MOVIES);
+  const { loading, data, refetch } = useQuery(GET_ALL_MOVIES, {
+    variables: {
+      filter: document.cookie.split("=")[1],
+      userId: "604bc6e57a7e0f143c3d33e2",
+    },
+  });
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
     update: (cache, { data: { deleteMovie } }) => {
@@ -87,9 +92,10 @@ function Movies() {
         }}
       />
       <Table borderless hover>
-        <MoviesTableHeader />
+        <MoviesTableHeader refetch={refetch} />
         <tbody>
           {data &&
+            !loading &&
             data.getAllMovies.map((movie: IMovie) => {
               return (
                 <tr key={movie.id}>

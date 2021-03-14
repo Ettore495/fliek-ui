@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_MOVIES = gql`
-  {
-    getAllMovies {
+  query GetAllMovies($filter: String, $userId: String!) {
+    getAllMovies(filter: $filter) {
       id
       name
       duration
@@ -11,10 +11,10 @@ export const GET_ALL_MOVIES = gql`
       averageRating
     }
 
-    getRatings(userId: "604bc6e57a7e0f143c3d33e2") {
+    getRatings(userId: $userId) {
       userId
-      rating
       movieId
+      rating
     }
   }
 `;

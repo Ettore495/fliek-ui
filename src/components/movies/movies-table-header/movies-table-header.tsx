@@ -1,14 +1,16 @@
-import { useLazyQuery } from "@apollo/client";
-import { useState } from "react";
-import { GET_ALL_MOVIES } from "../../../queries/movie/get-movies";
+import { MovieFilter } from "../../../models/MovieFilter";
 
-function MoviesTableHeader() {
-  const [movieFilter, setMovieFilter] = useState<string>("name");
-  const [getMovies, { loading, data }] = useLazyQuery(GET_ALL_MOVIES);
+interface IProps {
+  refetch: Function;
+}
 
+function MoviesTableHeader(props: IProps) {
   const handleFilterClick = (filter: string) => {
-    getMovies();
-    console.log(filter, data);
+    document.cookie = `movie_filter=${filter};max-age=604800;`;
+    props.refetch({
+      // Apollo bug: refetch does not include updated varibles :(
+      varibles: { filter: filter, userId: "604bc6e57a7e0f143c3d33e2" },
+    });
   };
 
   return (
@@ -16,15 +18,39 @@ function MoviesTableHeader() {
       <tr>
         <th
           onClick={() => {
-            handleFilterClick("name");
+            handleFilterClick(MovieFilter.NAME);
           }}
         >
           Name
         </th>
-        <th>Release date</th>
-        <th>Duration</th>
-        <th>Actors</th>
-        <th>Avg. rating</th>
+        <th
+          onClick={() => {
+            handleFilterClick(MovieFilter.RELEASE_DATE);
+          }}
+        >
+          Release date
+        </th>
+        <th
+          onClick={() => {
+            handleFilterClick(MovieFilter.DURATION);
+          }}
+        >
+          Duration
+        </th>
+        <th
+          onClick={() => {
+            handleFilterClick(MovieFilter.ACTORS);
+          }}
+        >
+          Actors
+        </th>
+        <th
+          onClick={() => {
+            handleFilterClick(MovieFilter.AVERAGE_RATING);
+          }}
+        >
+          Avg. rating
+        </th>
         <th>My rating</th>
       </tr>
     </thead>

@@ -11,6 +11,11 @@ $table-border-radius: 20px;
         cursor: pointer;
         color: $secondary-text-color;
         font-size: small;
+        transition: ease-in-out 0.2s;
+
+        &:hover {
+          color: $accent-color;
+        }
       }
     }
 
