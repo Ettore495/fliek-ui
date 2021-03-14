@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 import { ReactComponent as DotsVerticalIcon } from "../../assets/icons/dots-vertical.svg";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trash.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
@@ -15,9 +16,12 @@ import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {
+  const [filter, setFilter] = useState("name");
+  const [direction, setDirection] = useState("asc");
   const { loading, data, refetch } = useQuery(GET_ALL_MOVIES, {
     variables: {
-      filter: document.cookie.split("=")[1],
+      filter: filter,
+      sortDirection: direction,
       userId: "604bc6e57a7e0f143c3d33e2",
     },
   });
@@ -92,7 +96,11 @@ function Movies() {
         }}
       />
       <Table borderless hover>
-        <MoviesTableHeader refetch={refetch} />
+        <MoviesTableHeader
+          setFilter={setFilter}
+          setDirection={setDirection}
+          refetch={refetch}
+        />
         <tbody>
           {data &&
             !loading &&

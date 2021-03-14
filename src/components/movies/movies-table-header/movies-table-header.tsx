@@ -1,16 +1,22 @@
 import { MovieFilter } from "../../../models/MovieFilter";
+import Cookies from "js-cookie";
 
 interface IProps {
   refetch: Function;
+  setFilter: Function;
+  setDirection: Function;
 }
 
 function MoviesTableHeader(props: IProps) {
   const handleFilterClick = (filter: string) => {
-    document.cookie = `movie_filter=${filter};max-age=604800;`;
-    props.refetch({
-      // Apollo bug: refetch does not include updated varibles :(
-      varibles: { filter: filter, userId: "604bc6e57a7e0f143c3d33e2" },
-    });
+    const direction = Cookies.get("sort_direction") === "asc" ? "desc" : "asc";
+    // Set Movie filter cookies
+    Cookies.set("sort_direction", direction);
+    Cookies.set("movie_filter", filter);
+
+    // This will trigger rerender on parent component and fetch data
+    props.setFilter(filter);
+    props.setDirection(direction);
   };
 
   return (
