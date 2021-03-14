@@ -7,7 +7,6 @@ export const UPSERT_MOVIE = gql`
     $duration: String!
     $actors: String!
     $releaseDate: String!
-    $rating: Int
   ) {
     upsertMovie(
       id: $id
@@ -15,14 +14,13 @@ export const UPSERT_MOVIE = gql`
       duration: $duration
       actors: $actors
       releaseDate: $releaseDate
-      rating: $rating
     ) {
       id
       name
       duration
       actors
       releaseDate
-      rating
+      averageRating
     }
   }
 `;

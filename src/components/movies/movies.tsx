@@ -7,9 +7,11 @@ import { Dropdown, Table } from "react-bootstrap";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
 import { useMutation, useQuery } from "@apollo/client";
 import { IMovie } from "../../models/IMovie";
+import { IRating } from "../../models/IRating";
 import MovieModal from "../movie-modal/movie-modal";
 import { DELETE_MOVIE } from "../../mutations/movie/delete-movie";
 import ReactStars from "react-rating-stars-component";
+import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
 
 function Movies() {
   const { loading, error, data } = useQuery(GET_ALL_MOVIES);
@@ -34,6 +36,8 @@ function Movies() {
     },
   });
 
+  const [upsertRating] = useMutation(UPSERT_RATING);
+
   const [selectedMovie, setSelectedMovie] = useState<IMovie | undefined>(
     undefined
   );
@@ -55,8 +59,23 @@ function Movies() {
     });
   };
 
+  const getMovieRating = (movie: IMovie): IRating => {
+    const rating = data.getRatings.filter(
+      (rating: IRating) => rating.movieId === movie.id
+    )[0];
+    return rating ? rating.rating : 0;
+  };
+
   const ratingChanged = (rating: number) => {
-    console.log("rating", rating);
+    upsertRating({
+      variables: {
+        userId: "604bc6e57a7e0f143c3d33e2",
+        movieId: selectedMovie?.id,
+        rating: rating,
+      },
+    }).catch((error: any) => {
+      alert(error.message);
+    });
   };
 
   return (
@@ -88,9 +107,14 @@ function Movies() {
                   <td>{movie.releaseDate}</td>
                   <td>{movie.duration}</td>
                   <td>{movie.actors}</td>
-                  <td>
+                  <td
+                    onMouseEnter={() => {
+                      setSelectedMovie(movie);
+                    }}
+                  >
                     <ReactStars
                       count={5}
+                      value={getMovieRating(movie)}
                       onChange={ratingChanged}
                       size={24}
                       activeColor="#ffd700"
