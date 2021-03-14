@@ -1,10 +1,12 @@
 import { MovieFilter } from "../../../models/MovieFilter";
 import Cookies from "js-cookie";
+import SortDirectionIcons from "../sort-direction-icons/sort-direction-icons";
 
 interface IProps {
   refetch: Function;
   setFilter: Function;
   setDirection: Function;
+  direction: string;
 }
 
 function MoviesTableHeader(props: IProps) {
@@ -27,28 +29,40 @@ function MoviesTableHeader(props: IProps) {
             handleFilterClick(MovieFilter.NAME);
           }}
         >
-          Name
+          <div>
+            Name
+            <SortDirectionIcons sortDirection={props.direction} />
+          </div>
         </th>
         <th
           onClick={() => {
             handleFilterClick(MovieFilter.RELEASE_DATE);
           }}
         >
-          Release date
+          <div>
+            Release date
+            <SortDirectionIcons sortDirection={props.direction} />
+          </div>
         </th>
         <th
           onClick={() => {
             handleFilterClick(MovieFilter.DURATION);
           }}
         >
-          Duration
+          <div>
+            Duration
+            <SortDirectionIcons sortDirection={props.direction} />
+          </div>
         </th>
         <th
           onClick={() => {
             handleFilterClick(MovieFilter.ACTORS);
           }}
         >
-          Actors
+          <div>
+            Actors
+            <SortDirectionIcons sortDirection={props.direction} />
+          </div>
         </th>
         <th
           onClick={() => {

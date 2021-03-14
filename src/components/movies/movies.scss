@@ -16,6 +16,16 @@ $table-border-radius: 20px;
         &:hover {
           color: $accent-color;
         }
+
+        div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          svg {
+            height: 1.2rem;
+          }
+        }
       }
     }
 
