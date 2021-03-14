@@ -20,6 +20,7 @@ function Movies() {
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
   const handleSelectMovie = (movie: IMovie) => {
+    console.log(movie, "herere");
     setSelectedMovie(movie);
     setShowMovieModal(true);
   };

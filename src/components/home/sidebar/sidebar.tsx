@@ -12,6 +12,15 @@ import { IMovie } from "../../../types/IMovie";
 function Sidebar() {
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
+  const newMovie: IMovie = {
+    id: "",
+    name: "",
+    duration: "",
+    releaseDate: new Date(),
+    actors: "",
+    rating: 1,
+  };
+
   const handleClose = () => {
     setShowMovieModal(false);
   };
@@ -54,7 +63,11 @@ function Sidebar() {
         </Link>
       </ListGroup>
 
-      <MovieModal show={showMovieModal} handleClose={handleClose} />
+      <MovieModal
+        movie={newMovie}
+        show={showMovieModal}
+        handleClose={handleClose}
+      />
     </div>
   );
 }

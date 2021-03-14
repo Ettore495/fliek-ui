@@ -13,10 +13,11 @@ function MovieModal(props: {
   show: boolean;
   handleClose: Function;
 }) {
+  const isUpdating = props.movie?.id;
+
   // Use react hook to create a movie, then update apollo cache so with created item
   const [upsertMovie] = useMutation(UPSERT_MOVIE, {
     update: (cache, { data: { upsertMovie } }) => {
-      const isUpdating = !props.movie?.id;
       // Get existing data from cache
       const data: any = cache.readQuery({ query: GET_ALL_MOVIES });
 
@@ -24,7 +25,7 @@ function MovieModal(props: {
       cache.writeQuery({
         query: GET_ALL_MOVIES,
         data: {
-          getAllMovies: [...data.getAllMovies, isUpdating ?? upsertMovie],
+          getAllMovies: [...data.getAllMovies, !isUpdating ?? upsertMovie],
         },
       });
     },
@@ -36,7 +37,7 @@ function MovieModal(props: {
   const [movieName, setMovieName] = useState<string>("");
   const [movieDuration, setMovieDuration] = useState<string>("");
   const [movieActors, setMovieActors] = useState<string>("");
-  const [movieReleaseDate, setMovieReleaseDate] = useState<any | null>(
+  const [movieReleaseDate, setMovieReleaseDate] = useState<any | string>(
     new Date()
   );
 
@@ -45,8 +46,8 @@ function MovieModal(props: {
     setMovieId(props.movie?.id || "");
     setMovieName(props.movie?.name || "");
     setMovieDuration(props.movie?.duration || "");
-    setMovieActors(props.movie?.duration || "");
-    setMovieActors(props.movie?.duration || "");
+    setMovieActors(props.movie?.actors || "");
+    setMovieReleaseDate(props.movie?.releaseDate || "");
   }, [props]);
 
   // Add a movie
@@ -78,9 +79,14 @@ function MovieModal(props: {
 
   return (
     <div className="MovieModal">
-      <Modal animation={false} show={props.show} onHide={props.handleClose}>
+      <Modal
+        animation={false}
+        key={movieId}
+        show={props.show}
+        onHide={props.handleClose}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Add a movie</Modal.Title>
+          <Modal.Title>{isUpdating ? "Edit movie" : "Add movie"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate validated={validated}>
@@ -119,7 +125,9 @@ function MovieModal(props: {
                 <Form.Label>Release date</Form.Label>
                 <DatePicker
                   className="form-control"
-                  selected={movieReleaseDate}
+                  selected={
+                    movieReleaseDate ? new Date(movieReleaseDate) : null
+                  }
                   onChange={(date) => setMovieReleaseDate(date)}
                 />
                 <Form.Control.Feedback type="invalid">
