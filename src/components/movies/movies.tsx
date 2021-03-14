@@ -6,9 +6,10 @@ import "./movies.scss";
 import { Dropdown, Table } from "react-bootstrap";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
 import { useMutation, useQuery } from "@apollo/client";
-import { IMovie } from "../../types/IMovie";
+import { IMovie } from "../../models/IMovie";
 import MovieModal from "../movie-modal/movie-modal";
 import { DELETE_MOVIE } from "../../mutations/movie/delete-movie";
+import ReactStars from "react-rating-stars-component";
 
 function Movies() {
   const { loading, error, data } = useQuery(GET_ALL_MOVIES);
@@ -54,6 +55,10 @@ function Movies() {
     });
   };
 
+  const ratingChanged = (rating: number) => {
+    console.log("rating", rating);
+  };
+
   return (
     <div className="Movies">
       <MovieModal
@@ -83,7 +88,14 @@ function Movies() {
                   <td>{movie.releaseDate}</td>
                   <td>{movie.duration}</td>
                   <td>{movie.actors}</td>
-                  <td>{movie.rating}</td>
+                  <td>
+                    <ReactStars
+                      count={5}
+                      onChange={ratingChanged}
+                      size={24}
+                      activeColor="#ffd700"
+                    />
+                  </td>
                   <td>
                     <Dropdown>
                       <Dropdown.Toggle as="div" className="options-dropdown">

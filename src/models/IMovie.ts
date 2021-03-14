@@ -4,5 +4,5 @@ export interface IMovie {
   releaseDate: any;
   actors: string;
   duration: string;
-  rating: number;
+  averageRating: number;
 }

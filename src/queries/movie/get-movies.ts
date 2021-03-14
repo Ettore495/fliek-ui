@@ -8,7 +8,7 @@ export const GET_ALL_MOVIES = gql`
       duration
       releaseDate
       actors
-      rating
+      averageRating
     }
   }
 `;

@@ -7,7 +7,7 @@ import { ReactComponent as PlusIcon } from "../../../assets/icons/plus.svg";
 import "./sidebar.scss";
 import { Link, NavLink } from "react-router-dom";
 import MovieModal from "../../movie-modal/movie-modal";
-import { IMovie } from "../../../types/IMovie";
+import { IMovie } from "../../../models/IMovie";
 
 function Sidebar() {
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
@@ -18,7 +18,7 @@ function Sidebar() {
     duration: "",
     releaseDate: new Date(),
     actors: "",
-    rating: 1,
+    averageRating: 1,
   };
 
   const handleClose = () => {

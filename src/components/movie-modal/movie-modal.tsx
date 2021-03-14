@@ -6,7 +6,7 @@ import { UPSERT_MOVIE } from "../../mutations/movie/upsert-movie";
 import "react-datepicker/dist/react-datepicker.css";
 import "./movie-modal.scss";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
-import { IMovie } from "../../types/IMovie";
+import { IMovie } from "../../models/IMovie";
 
 function MovieModal(props: {
   movie?: IMovie;
