@@ -1,3 +1,17 @@
 $primary-text-color: #485577;
 $secondary-text-color: #aab5c3;
 $accent-color: #e71d60;
+
+.dropdown-menu {
+  svg {
+    margin-right: 10px;
+    height: 1.2rem;
+  }
+
+  .dropdown-item {
+    transition: ease-in-out all 0.2s;
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}

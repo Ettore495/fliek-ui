@@ -1,14 +1,16 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_MOVIE = gql`
-  mutation CreateMovie(
+export const UPSERT_MOVIE = gql`
+  mutation UpsertMovie(
+    $id: String
     $name: String!
     $duration: String!
     $actors: String!
     $releaseDate: String!
     $rating: Int
   ) {
-    createMovie(
+    upsertMovie(
+      id: $id
       name: $name
       duration: $duration
       actors: $actors

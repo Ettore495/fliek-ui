@@ -14,8 +14,10 @@ function Movies() {
   if (error) console.log(error);
   if (loading) console.log("loading");
 
-  const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
-  const [showMovieModal, setShowMovieModal] = useState<Boolean>(false);
+  const [selectedMovie, setSelectedMovie] = useState<IMovie | undefined>(
+    undefined
+  );
+  const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
   const handleSelectMovie = (movie: IMovie) => {
     setSelectedMovie(movie);
@@ -29,11 +31,11 @@ function Movies() {
   return (
     <div className="Movies">
       <MovieModal
+        movie={selectedMovie}
         show={showMovieModal}
         handleClose={() => {
           setShowMovieModal(false);
         }}
-        movie={selectedMovie}
       />
       <Table borderless hover>
         <thead>

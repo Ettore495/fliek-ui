@@ -1,28 +1,38 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { CREATE_MOVIE } from "../../mutations/movie/create-movie";
+import { UPSERT_MOVIE } from "../../mutations/movie/upsert-movie";
 import "react-datepicker/dist/react-datepicker.css";
 import "./movie-modal.scss";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
+import { IMovie } from "../../types/IMovie";
 
-function MovieModal(props: any) {
+function MovieModal(props: {
+  movie?: IMovie;
+  show: boolean;
+  handleClose: Function;
+}) {
   // Use react hook to create a movie, then update apollo cache so with created item
-  const [createMovie] = useMutation(CREATE_MOVIE, {
-    update: (cache, { data: { createMovie } }) => {
+  const [upsertMovie] = useMutation(UPSERT_MOVIE, {
+    update: (cache, { data: { upsertMovie } }) => {
+      const isUpdating = !props.movie?.id;
       // Get existing data from cache
       const data: any = cache.readQuery({ query: GET_ALL_MOVIES });
 
       // Update cache with new item and existing data
       cache.writeQuery({
         query: GET_ALL_MOVIES,
-        data: { getAllMovies: [...data.getAllMovies, createMovie] },
+        data: {
+          getAllMovies: [...data.getAllMovies, isUpdating ?? upsertMovie],
+        },
       });
     },
   });
 
+  // Reactive properties
   const [validated, setValidated] = useState(false);
+  const [movieId, setMovieId] = useState<string>("");
   const [movieName, setMovieName] = useState<string>("");
   const [movieDuration, setMovieDuration] = useState<string>("");
   const [movieActors, setMovieActors] = useState<string>("");
@@ -30,6 +40,17 @@ function MovieModal(props: any) {
     new Date()
   );
 
+  // When props are passed, sync them with props and rerender
+  useEffect(() => {
+    console.log(props.movie?.id);
+    setMovieId(props.movie?.id || "");
+    setMovieName(props.movie?.name || "");
+    setMovieDuration(props.movie?.duration || "");
+    setMovieActors(props.movie?.duration || "");
+    setMovieActors(props.movie?.duration || "");
+  }, [props]);
+
+  // Add a movie
   const handleAddMovie = (event: any) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -39,9 +60,10 @@ function MovieModal(props: any) {
 
     setValidated(true);
 
-    // Fetch data via graphQL
-    createMovie({
+    // Add movie via graphQL
+    upsertMovie({
       variables: {
+        id: movieId,
         name: movieName,
         duration: movieDuration,
         actors: movieActors,
@@ -49,7 +71,7 @@ function MovieModal(props: any) {
         rating: 0,
       },
     }).then((res) => {
-      alert("movie created");
+      // Close modal
       props.handleClose();
       console.log(res);
     });
