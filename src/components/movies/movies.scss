@@ -8,6 +8,7 @@ $table-border-radius: 20px;
 
     thead {
       th {
+        cursor: pointer;
         color: $secondary-text-color;
         font-size: small;
       }
@@ -18,6 +19,9 @@ $table-border-radius: 20px;
       tr {
         cursor: pointer;
         border-bottom: 1px solid lightgray;
+        td {
+          vertical-align: middle;
+        }
       }
 
       .options-dropdown {

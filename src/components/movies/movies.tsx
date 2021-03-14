@@ -12,11 +12,10 @@ import MovieModal from "../movie-modal/movie-modal";
 import { DELETE_MOVIE } from "../../mutations/movie/delete-movie";
 import ReactStars from "react-rating-stars-component";
 import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
+import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {
-  const { loading, error, data } = useQuery(GET_ALL_MOVIES);
-  if (error) console.log(error);
-  if (loading) console.log("loading");
+  const { data } = useQuery(GET_ALL_MOVIES);
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
     update: (cache, { data: { deleteMovie } }) => {
@@ -88,16 +87,7 @@ function Movies() {
         }}
       />
       <Table borderless hover>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Release date</th>
-            <th>Duration</th>
-            <th>Actors</th>
-            <th>rating</th>
-            <th></th>
-          </tr>
-        </thead>
+        <MoviesTableHeader />
         <tbody>
           {data &&
             data.getAllMovies.map((movie: IMovie) => {
@@ -107,6 +97,7 @@ function Movies() {
                   <td>{movie.releaseDate}</td>
                   <td>{movie.duration}</td>
                   <td>{movie.actors}</td>
+                  <td>{movie.averageRating}</td>
                   <td
                     onMouseEnter={() => {
                       setSelectedMovie(movie);
