@@ -42,7 +42,6 @@ function MovieModal(props: {
 
   // When props are passed, sync them with props and rerender
   useEffect(() => {
-    console.log(props.movie?.id);
     setMovieId(props.movie?.id || "");
     setMovieName(props.movie?.name || "");
     setMovieDuration(props.movie?.duration || "");
