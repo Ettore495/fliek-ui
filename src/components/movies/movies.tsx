@@ -5,14 +5,33 @@ import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import "./movies.scss";
 import { Dropdown, Table } from "react-bootstrap";
 import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { IMovie } from "../../types/IMovie";
 import MovieModal from "../movie-modal/movie-modal";
+import { DELETE_MOVIE } from "../../mutations/movie/delete-movie";
 
 function Movies() {
   const { loading, error, data } = useQuery(GET_ALL_MOVIES);
   if (error) console.log(error);
   if (loading) console.log("loading");
+
+  const [deleteMovie] = useMutation(DELETE_MOVIE, {
+    update: (cache, { data: { deleteMovie } }) => {
+      // Get existing data from cache
+      const movies: any = cache.readQuery({ query: GET_ALL_MOVIES });
+      // Filter deleted movie out of array
+      const newMovies = movies.getAllMovies.filter(
+        (m: IMovie) => m.id !== deleteMovie.id
+      );
+      // Update cache with new movies
+      cache.writeQuery({
+        query: GET_ALL_MOVIES,
+        data: {
+          getAllMovies: newMovies,
+        },
+      });
+    },
+  });
 
   const [selectedMovie, setSelectedMovie] = useState<IMovie | undefined>(
     undefined
@@ -20,13 +39,19 @@ function Movies() {
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
   const handleSelectMovie = (movie: IMovie) => {
-    console.log(movie, "herere");
     setSelectedMovie(movie);
     setShowMovieModal(true);
   };
 
   const handleDeleteMovie = (movie: IMovie) => {
-    // TODO - delete movie
+    deleteMovie({
+      variables: {
+        id: movie.id,
+      },
+    }).then((result) => {
+      alert("movie was deleted");
+      console.log(result);
+    });
   };
 
   return (
