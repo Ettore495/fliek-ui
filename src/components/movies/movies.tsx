@@ -17,10 +17,10 @@ import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {
   const [filter, setFilter] = useState<string>(
-    Cookies.get("movie_filter") || ""
+    Cookies.get("movie_filter") || "name"
   );
   const [direction, setDirection] = useState<string>(
-    Cookies.get("sort_direction") || ""
+    Cookies.get("sort_direction") || "asc"
   );
   const { loading, data, refetch } = useQuery(GET_ALL_MOVIES, {
     variables: {
