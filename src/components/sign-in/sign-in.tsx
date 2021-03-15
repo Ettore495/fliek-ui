@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Button, Col, Form } from "react-bootstrap";
 import Logo from "../shared/logo/logo";
 import { useHistory } from "react-router-dom";
-import { LOGIN } from "../../mutations/auth/login";
+import { LOGIN } from "../../graphql/mutations/auth/login";
 import "./sign-in.scss";
 import {
   logout,

@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import Logo from "../shared/logo/logo";
-import { REGISTER } from "../../mutations/auth/register";
+import { REGISTER } from "../../graphql/mutations/auth/register";
 import "./register.scss";
 import { useHistory } from "react-router-dom";
 import { Button, Col, Form } from "react-bootstrap";

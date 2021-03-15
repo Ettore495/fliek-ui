@@ -2,10 +2,10 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { UPSERT_MOVIE } from "../../mutations/movie/upsert-movie";
+import { UPSERT_MOVIE } from "../../graphql/mutations/movie/upsert-movie";
 import "react-datepicker/dist/react-datepicker.css";
 import "./movie-modal.scss";
-import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
+import { GET_ALL_MOVIES } from "../../graphql/queries/movie/get-movies";
 import { IMovie } from "../../models/IMovie";
 
 function MovieModal(props: {

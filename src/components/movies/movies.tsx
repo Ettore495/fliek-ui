@@ -5,14 +5,14 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trash.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import "./movies.scss";
 import { Dropdown, Table } from "react-bootstrap";
-import { GET_ALL_MOVIES } from "../../queries/movie/get-movies";
+import { GET_ALL_MOVIES } from "../../graphql/queries/movie/get-movies";
 import { useMutation, useQuery } from "@apollo/client";
 import { IMovie } from "../../models/IMovie";
 import { IRating } from "../../models/IRating";
 import MovieModal from "../movie-modal/movie-modal";
-import { DELETE_MOVIE } from "../../mutations/movie/delete-movie";
+import { DELETE_MOVIE } from "../../graphql/mutations/movie/delete-movie";
 import ReactStars from "react-rating-stars-component";
-import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
+import { UPSERT_RATING } from "../../graphql/mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {

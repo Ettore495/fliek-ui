@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Logo from "../../shared/logo/logo";
 import { ReactComponent as FilmIcon } from "../../../assets/icons/film.svg";
