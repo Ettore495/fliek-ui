@@ -5,11 +5,12 @@ import Logo from "../shared/logo/logo";
 import { useHistory } from "react-router-dom";
 import { LOGIN } from "../../mutations/auth/login";
 import "./sign-in.scss";
+import { saveProfileToLocalStorage } from "../../services/security-service";
 
 function SignIn() {
   const history = useHistory();
 
-  const [loginUser] = useMutation(LOGIN);
+  const [loginUser, { client }] = useMutation(LOGIN);
 
   const [validated, setValidated] = useState(false);
   const [userName, setUserName] = useState("");
@@ -31,6 +32,8 @@ function SignIn() {
       },
     })
       .then((result) => {
+        client.clearStore();
+        saveProfileToLocalStorage(result.data.login);
         history.push("/home/movies");
       })
       .catch((error) => {
