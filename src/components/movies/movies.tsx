@@ -14,6 +14,7 @@ import { DELETE_MOVIE } from "../../graphql/mutations/movie/delete-movie";
 import ReactStars from "react-rating-stars-component";
 import { UPSERT_RATING } from "../../graphql/mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
+import MovieSubscription from "./movie-subscription/movie-subscription";
 
 function Movies() {
   const [filter, setFilter] = useState<string>(

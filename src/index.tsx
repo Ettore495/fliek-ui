@@ -9,8 +9,18 @@ import {
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
+  split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+
+const wsLink = new WebSocketLink({
+  uri: "ws://localhost:3000/graphql",
+  options: {
+    reconnect: true,
+  },
+});
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3000/",
@@ -28,8 +38,22 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// this will split communication by operation. Subscription query = web sockets
+// mutations and queries = http
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache(),
 });
 
