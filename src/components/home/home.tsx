@@ -13,9 +13,7 @@ export default class Home extends Component {
           <header>
             <Header />
           </header>
-          <aside>
-            <Sidebar />
-          </aside>
+          <Sidebar />
           <main>
             <Route path="/home/movies" component={Movies} />
           </main>

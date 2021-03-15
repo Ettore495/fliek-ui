@@ -8,8 +8,10 @@ import "./sidebar.scss";
 import { Link, NavLink } from "react-router-dom";
 import MovieModal from "../../movie-modal/movie-modal";
 import { IMovie } from "../../../models/IMovie";
+import { useHistory } from "react-router-dom";
 
 function Sidebar() {
+  const history = useHistory();
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
   const newMovie: IMovie = {
@@ -49,6 +51,7 @@ function Sidebar() {
           </ListGroup.Item>
         </NavLink>
         <Link
+          className="flex-grow-1"
           to="#"
           onClick={() => {
             setShowMovieModal(true);
@@ -61,8 +64,15 @@ function Sidebar() {
             </div>
           </ListGroup.Item>
         </Link>
+        <Link className="logout-button" to="/sign-in">
+          <ListGroup.Item action>
+            <div className="item-wrapper">
+              <DatabaseIcon />
+              Logout
+            </div>
+          </ListGroup.Item>
+        </Link>
       </ListGroup>
-
       <MovieModal
         movie={newMovie}
         show={showMovieModal}

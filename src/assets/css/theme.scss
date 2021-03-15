@@ -2,6 +2,26 @@ $primary-text-color: #485577;
 $secondary-text-color: #aab5c3;
 $accent-color: #e71d60;
 
+.App {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 .dropdown-menu {
   svg {
     margin-right: 10px;

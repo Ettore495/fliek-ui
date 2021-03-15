@@ -5,9 +5,16 @@ import Logo from "../shared/logo/logo";
 import { useHistory } from "react-router-dom";
 import { LOGIN } from "../../mutations/auth/login";
 import "./sign-in.scss";
-import { saveProfileToLocalStorage } from "../../services/security-service";
+import {
+  logout,
+  saveProfileToLocalStorage,
+} from "../../services/security-service";
 
-function SignIn() {
+interface Props {
+  setIsAuthenticated: Function;
+}
+
+function SignIn(props: Props) {
   const history = useHistory();
 
   const [loginUser, { client }] = useMutation(LOGIN);
@@ -32,8 +39,13 @@ function SignIn() {
       },
     })
       .then((result) => {
+        // Clear apollo cache
         client.clearStore();
+        // Store logged in for on refresh
         saveProfileToLocalStorage(result.data.login);
+        props.setIsAuthenticated(true);
+        localStorage.setItem("logged_in", "true");
+        // Redirect to home page
         history.push("/home/movies");
       })
       .catch((error) => {

@@ -1,6 +1,10 @@
 @import "../../../assets/css/theme.scss";
 
 .Sidebar {
+  height: 100%;
+  border-right: 1px solid lightgray;
+  grid-area: sidebar;
+
   .header {
     height: 100px;
     text-align: left;
