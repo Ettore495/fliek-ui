@@ -14,7 +14,7 @@ import { DELETE_MOVIE } from "../../graphql/mutations/movie/delete-movie";
 import ReactStars from "react-rating-stars-component";
 import { UPSERT_RATING } from "../../graphql/mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
-import MovieSubscription from "./movie-subscription/movie-subscription";
+import MovieSubscription from "./movie-subscription/movie-upsert-subscription";
 
 function Movies() {
   const [filter, setFilter] = useState<string>(
@@ -32,20 +32,9 @@ function Movies() {
   });
 
   const [deleteMovie] = useMutation(DELETE_MOVIE, {
-    update: (cache, { data: { deleteMovie } }) => {
+    update: () => {
       // Get existing data from cache
-      const movies: any = cache.readQuery({ query: GET_ALL_MOVIES });
-      // Filter deleted movie out of array
-      const newMovies = movies.getAllMovies.filter(
-        (m: IMovie) => m.id !== deleteMovie.id
-      );
-      // Update cache with new movies
-      cache.writeQuery({
-        query: GET_ALL_MOVIES,
-        data: {
-          getAllMovies: newMovies,
-        },
-      });
+      refetch();
     },
   });
 
@@ -67,7 +56,6 @@ function Movies() {
         id: movie.id,
       },
     }).then((result) => {
-      alert("movie was deleted");
       console.log(result);
     });
   };

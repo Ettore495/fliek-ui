@@ -20,14 +20,16 @@ function MovieModal(props: {
     update: (cache, { data: { upsertMovie } }) => {
       // Get existing data from cache
       const data: any = cache.readQuery({ query: GET_ALL_MOVIES });
-
-      // Update cache with new item and existing data
-      cache.writeQuery({
-        query: GET_ALL_MOVIES,
-        data: {
-          getAllMovies: [...data.getAllMovies, !isUpdating ?? upsertMovie],
-        },
-      });
+      console.log(data, "HERER");
+      if (data) {
+        // Update cache with new item and existing data
+        cache.writeQuery({
+          query: GET_ALL_MOVIES,
+          data: {
+            getAllMovies: [...data.getAllMovies, !isUpdating ?? upsertMovie],
+          },
+        });
+      }
     },
   });
 

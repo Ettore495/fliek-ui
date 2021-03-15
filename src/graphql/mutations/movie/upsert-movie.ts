@@ -18,8 +18,8 @@ export const UPSERT_MOVIE = gql`
       id
       name
       duration
-      actors
       releaseDate
+      actors
       averageRating
     }
   }
