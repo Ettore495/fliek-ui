@@ -16,8 +16,12 @@ import { UPSERT_RATING } from "../../mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
 
 function Movies() {
-  const [filter, setFilter] = useState("name");
-  const [direction, setDirection] = useState("asc");
+  const [filter, setFilter] = useState<string>(
+    Cookies.get("movie_filter") || ""
+  );
+  const [direction, setDirection] = useState<string>(
+    Cookies.get("sort_direction") || ""
+  );
   const { loading, data, refetch } = useQuery(GET_ALL_MOVIES, {
     variables: {
       filter: filter,
