@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./assets/css/theme.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignIn from "../src/components/sign-in/sign-in";
@@ -11,6 +11,17 @@ function App() {
   const [isAutheticated, setisAutheticated] = useState(
     Boolean(localStorage.getItem("logged_in"))
   );
+
+  useEffect(() => {
+    window.addEventListener("storage", (event) => {
+      if (event) {
+        setisAutheticated(
+          event?.storageArea?.["logged_in"] &&
+            event?.storageArea?.["access_token"]
+        );
+      }
+    });
+  }, []);
 
   return (
     <div className="App">

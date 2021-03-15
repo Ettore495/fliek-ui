@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Button, Col, Form } from "react-bootstrap";
 import Logo from "../shared/logo/logo";
@@ -22,6 +22,11 @@ function SignIn(props: Props) {
   const [validated, setValidated] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    // on mount
+    localStorage.clear();
+  }, []);
 
   const handleLogin = (event: any) => {
     event.preventDefault();
