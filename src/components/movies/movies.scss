@@ -13,6 +13,10 @@ $table-border-radius: 20px;
         font-size: small;
         transition: ease-in-out 0.2s;
 
+        .active-filter {
+          color: $accent-color;
+        }
+
         &:hover {
           color: $accent-color;
         }

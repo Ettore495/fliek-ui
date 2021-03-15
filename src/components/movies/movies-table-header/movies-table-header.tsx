@@ -7,10 +7,15 @@ interface IProps {
   setFilter: Function;
   setDirection: Function;
   direction: string;
+  filter: string;
 }
 
 function MoviesTableHeader(props: IProps) {
-  const handleFilterClick = (filter: string) => {
+  const filterIsActive = (filter: MovieFilter): boolean => {
+    return props.filter === filter;
+  };
+
+  const handleFilterClick = (filter: MovieFilter) => {
     const direction = Cookies.get("sort_direction") === "asc" ? "desc" : "asc";
     // Set Movie filter cookies
     Cookies.set("sort_direction", direction);
@@ -29,7 +34,9 @@ function MoviesTableHeader(props: IProps) {
             handleFilterClick(MovieFilter.NAME);
           }}
         >
-          <div>
+          <div
+            className={filterIsActive(MovieFilter.NAME) ? "active-filter" : ""}
+          >
             Name
             <SortDirectionIcons sortDirection={props.direction} />
           </div>
@@ -39,7 +46,11 @@ function MoviesTableHeader(props: IProps) {
             handleFilterClick(MovieFilter.RELEASE_DATE);
           }}
         >
-          <div>
+          <div
+            className={
+              filterIsActive(MovieFilter.RELEASE_DATE) ? "active-filter" : ""
+            }
+          >
             Release date
             <SortDirectionIcons sortDirection={props.direction} />
           </div>
@@ -49,7 +60,11 @@ function MoviesTableHeader(props: IProps) {
             handleFilterClick(MovieFilter.DURATION);
           }}
         >
-          <div>
+          <div
+            className={
+              filterIsActive(MovieFilter.DURATION) ? "active-filter" : ""
+            }
+          >
             Duration
             <SortDirectionIcons sortDirection={props.direction} />
           </div>
@@ -59,7 +74,11 @@ function MoviesTableHeader(props: IProps) {
             handleFilterClick(MovieFilter.ACTORS);
           }}
         >
-          <div>
+          <div
+            className={
+              filterIsActive(MovieFilter.ACTORS) ? "active-filter" : ""
+            }
+          >
             Actors
             <SortDirectionIcons sortDirection={props.direction} />
           </div>

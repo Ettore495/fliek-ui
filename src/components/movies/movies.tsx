@@ -97,6 +97,7 @@ function Movies() {
       />
       <Table borderless hover>
         <MoviesTableHeader
+          filter={filter}
           direction={direction}
           setFilter={setFilter}
           setDirection={setDirection}
