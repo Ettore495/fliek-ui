@@ -18,9 +18,8 @@ function MovieModal(props: {
   // Use react hook to create a movie, then update apollo cache so with created item
   const [upsertMovie] = useMutation(UPSERT_MOVIE, {
     update: (cache, { data: { upsertMovie } }) => {
-      // Get existing data from cache
+      // Get existing data from cache, this query returns empty :(
       const data: any = cache.readQuery({ query: GET_ALL_MOVIES });
-      console.log(data, "HERER");
       if (data) {
         // Update cache with new item and existing data
         cache.writeQuery({
@@ -44,6 +43,7 @@ function MovieModal(props: {
   );
 
   // When props are passed, sync them with props and rerender
+  // Props setstate should be passed into this component instead
   useEffect(() => {
     setMovieId(props.movie?.id || "");
     setMovieName(props.movie?.name || "");
@@ -54,10 +54,14 @@ function MovieModal(props: {
 
   // Add a movie
   const handleAddMovie = (event: any) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    const movieForm: HTMLFormElement | null = document.querySelector(
+      ".movie-edit-form"
+    );
+    movieForm?.reportValidity();
+    if (movieForm?.checkValidity() === false) {
       event.stopPropagation();
+      setValidated(false);
+      return;
     }
 
     setValidated(true);
@@ -91,7 +95,7 @@ function MovieModal(props: {
           <Modal.Title>{isUpdating ? "Edit movie" : "Add movie"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={validated}>
+          <Form noValidate validated={validated} className="movie-edit-form">
             <Form.Row>
               <Form.Group as={Col} md="12" controlId="RegisterFirstNameInput">
                 <Form.Label>Movie name</Form.Label>

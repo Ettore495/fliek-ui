@@ -22,6 +22,7 @@ function Register() {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
+      setValidated(false);
     }
 
     setValidated(true);
@@ -35,7 +36,6 @@ function Register() {
       },
     })
       .then((result) => {
-        console.log(result);
         history.push("/sign-in");
       })
       .catch((err) => {});

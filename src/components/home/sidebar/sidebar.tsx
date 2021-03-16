@@ -4,6 +4,7 @@ import Logo from "../../shared/logo/logo";
 import { ReactComponent as FilmIcon } from "../../../assets/icons/film.svg";
 import { ReactComponent as DatabaseIcon } from "../../../assets/icons/database.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/plus.svg";
+import { ReactComponent as LogoutIcon } from "../../../assets/icons/logout.svg";
 import "./sidebar.scss";
 import { Link, NavLink } from "react-router-dom";
 import MovieModal from "../../movie-modal/movie-modal";
@@ -67,7 +68,7 @@ function Sidebar() {
         <Link className="logout-button" to="/sign-in">
           <ListGroup.Item action>
             <div className="item-wrapper">
-              <DatabaseIcon />
+              <LogoutIcon />
               Logout
             </div>
           </ListGroup.Item>

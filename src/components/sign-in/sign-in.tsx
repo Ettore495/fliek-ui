@@ -54,7 +54,7 @@ function SignIn(props: Props) {
         history.push("/home/movies");
       })
       .catch((error) => {
-        alert("invalid username or password");
+        //alert("invalid username or password");
       });
   };
 

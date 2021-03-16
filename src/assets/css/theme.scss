@@ -35,3 +35,19 @@ code {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .Sidebar .menu-heading {
+    text-align: center;
+  }
+
+  .Sidebar .list-group a svg {
+    margin-right: 0px;
+  }
+  .list-group-item {
+    .item-wrapper {
+      font-size: 0px;
+      justify-content: center;
+    }
+  }
+}

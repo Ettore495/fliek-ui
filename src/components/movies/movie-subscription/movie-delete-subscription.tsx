@@ -13,7 +13,6 @@ function MovieDeleteSubscription() {
       element.style.display = "block";
       var timer = setTimeout(() => {
         element.style.display = "none";
-        console.log("done");
       }, 2000);
     }
     return () => clearTimeout(timer);

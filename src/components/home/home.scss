@@ -4,7 +4,7 @@
   .home-container {
     display: grid;
     height: 100vh;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(100px, auto) 1fr;
     grid-template-rows: 100px 1fr;
     grid-template-areas:
       "sidebar header"
