@@ -4,25 +4,65 @@ import { Route } from "react-router-dom";
 import Movies from "../movies/movies";
 import Header from "./header/header";
 import Sidebar from "./sidebar/sidebar";
-import MovieSubscription from "../movies/movie-subscription/movie-upsert-subscription";
-import MovieDeleteSubscription from "../movies/movie-subscription/movie-delete-subscription";
+import { useSubscription } from "@apollo/client";
+import { DELETE_MOVIE_SUBSCRIPTION } from "../../graphql/subscriptions/movie/delete-movie";
+import { UPSERT_MOVIE_SUBSCRIPTION } from "../../graphql/subscriptions/movie/upsert-movie";
+import MovieSubscriptionAlert from "../movies/movie-subscription/movie-subscription-alert";
 
-export default class Home extends Component {
-  render() {
-    return (
-      <div className="Home">
-        <div className="home-container">
-          <MovieSubscription />
-          <MovieDeleteSubscription />
-          <header>
-            <Header />
-          </header>
-          <Sidebar />
-          <main>
-            <Route path="/home/movies" component={Movies} />
-          </main>
-        </div>
+function Home() {
+  const {
+    data: deleteSubscribeData,
+    loading: deleteSubscribeLoading,
+  } = useSubscription(DELETE_MOVIE_SUBSCRIPTION);
+  const {
+    data: upsertSubscribeData,
+    loading: upsertSubscribeLoading,
+  } = useSubscription(UPSERT_MOVIE_SUBSCRIPTION);
+
+  const renderSubscriptionALert = () => {
+    if (!deleteSubscribeLoading) {
+      return (
+        <MovieSubscriptionAlert
+          data={deleteSubscribeData?.movieDeleted}
+          loading={deleteSubscribeLoading}
+          heading="Movie deleted"
+          action="deleted"
+        />
+      );
+    }
+
+    if (!upsertSubscribeLoading) {
+      return (
+        <MovieSubscriptionAlert
+          data={upsertSubscribeData?.movieCreated}
+          loading={upsertSubscribeLoading}
+          heading={
+            upsertSubscribeData?.movieCreated.update
+              ? "Movie updated"
+              : "Movie created"
+          }
+          action={
+            upsertSubscribeData?.movieCreated.update ? "updated" : "created"
+          }
+        />
+      );
+    }
+  };
+
+  return (
+    <div className="Home">
+      <div className="home-container">
+        {renderSubscriptionALert()}
+        <header>
+          <Header />
+        </header>
+        <Sidebar />
+        <main>
+          <Route path="/home/movies" component={Movies} />
+        </main>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default Home;
