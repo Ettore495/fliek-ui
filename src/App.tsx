@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/theme.scss";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import SignIn from "../src/components/sign-in/sign-in";
 import Home from "./components/home/home";
 import Register from "./components/register/register";
@@ -27,6 +32,7 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
+          <Redirect exact from="/" to="/home/movies" />
           <Route exact path="/sign-in">
             <SignIn setIsAuthenticated={setisAutheticated} />
           </Route>

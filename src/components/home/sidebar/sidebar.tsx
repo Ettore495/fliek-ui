@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Logo from "../../shared/logo/logo";
 import { ReactComponent as FilmIcon } from "../../../assets/icons/film.svg";
-import { ReactComponent as DatabaseIcon } from "../../../assets/icons/database.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/icons/plus.svg";
 import { ReactComponent as LogoutIcon } from "../../../assets/icons/logout.svg";
 import "./sidebar.scss";
 import { Link, NavLink } from "react-router-dom";
 import MovieModal from "../../movie-modal/movie-modal";
 import { IMovie } from "../../../models/IMovie";
-import { useHistory } from "react-router-dom";
 
 function Sidebar() {
-  const history = useHistory();
   const [showMovieModal, setShowMovieModal] = useState<boolean>(false);
 
   const newMovie: IMovie = {
@@ -43,14 +40,14 @@ function Sidebar() {
             </div>
           </ListGroup.Item>
         </NavLink>
-        <NavLink to="/home/my-collection" activeClassName="selected">
+        {/* <NavLink to="/home/my-collection" activeClassName="selected">
           <ListGroup.Item action>
             <div className="item-wrapper">
               <DatabaseIcon />
               My collection
             </div>
           </ListGroup.Item>
-        </NavLink>
+        </NavLink> */}
         <Link
           className="flex-grow-1"
           to="#"

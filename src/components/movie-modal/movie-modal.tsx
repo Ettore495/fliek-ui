@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./movie-modal.scss";
 import { GET_ALL_MOVIES } from "../../graphql/queries/movie/get-movies";
 import { IMovie } from "../../models/IMovie";
+import Cookies from "js-cookie";
 
 function MovieModal(props: {
   movie?: IMovie;
@@ -15,20 +16,41 @@ function MovieModal(props: {
 }) {
   const isUpdating = props.movie?.id;
 
+  const [filter, setFilter] = useState<string>(
+    Cookies.get("movie_filter") || "name"
+  );
+  const [direction, setDirection] = useState<string>(
+    Cookies.get("sort_direction") || "asc"
+  );
+
   // Use react hook to create a movie, then update apollo cache so with created item
   const [upsertMovie] = useMutation(UPSERT_MOVIE, {
     update: (cache, { data: { upsertMovie } }) => {
-      // Get existing data from cache, this query returns empty :(
-      const data: any = cache.readQuery({ query: GET_ALL_MOVIES });
-      if (data) {
-        // Update cache with new item and existing data
-        cache.writeQuery({
-          query: GET_ALL_MOVIES,
-          data: {
-            getAllMovies: [...data.getAllMovies, !isUpdating ?? upsertMovie],
-          },
-        });
-      }
+      // Set filter varibles
+      setFilter(Cookies.get("movie_filter") || "name");
+      setDirection(Cookies.get("sort_direction") || "asc");
+
+      const vars = {
+        filter: filter,
+        sortDirection: direction,
+        userId: "604bc6e57a7e0f143c3d33e2",
+      };
+      // Get existing data from cache
+      const data: any = cache.readQuery({
+        query: GET_ALL_MOVIES,
+        variables: vars,
+        returnPartialData: true,
+      });
+      console.log("here", data, upsertMovie);
+      // Update cache with new item and existing data
+      cache.writeQuery({
+        query: GET_ALL_MOVIES,
+        variables: vars,
+        data: {
+          getAllMovies: [...data.getAllMovies, !isUpdating ?? upsertMovie],
+          getRatings: [...data.getRatings],
+        },
+      });
     },
   });
 
