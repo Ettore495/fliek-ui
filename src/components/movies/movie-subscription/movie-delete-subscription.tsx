@@ -24,9 +24,11 @@ function MovieDeleteSubscription() {
         <Toast.Header>
           <strong className="mr-auto">Delete</strong>
         </Toast.Header>
-        <Toast.Body>{`User deleted movie ${
-          !loading ? data.movieDeleted.name : "no data"
-        }`}</Toast.Body>
+        <Toast.Body>
+          {!loading
+            ? `${data.movieDeleted.user.username} deleted movie: ${data.movieDeleted.movie.name}`
+            : ""}
+        </Toast.Body>
       </Toast>
     </div>
   );

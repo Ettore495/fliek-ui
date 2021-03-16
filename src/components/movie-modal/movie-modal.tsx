@@ -8,6 +8,8 @@ import "./movie-modal.scss";
 import { GET_ALL_MOVIES } from "../../graphql/queries/movie/get-movies";
 import { IMovie } from "../../models/IMovie";
 import Cookies from "js-cookie";
+import { getUserProfile } from "../../services/security-service";
+import { IUserProfile } from "../../models/IUserProfile";
 
 function MovieModal(props: {
   movie?: IMovie;
@@ -15,6 +17,7 @@ function MovieModal(props: {
   handleClose: Function;
 }) {
   const isUpdating = props.movie?.id;
+  const profile: IUserProfile = getUserProfile();
 
   const [filter, setFilter] = useState<string>(
     Cookies.get("movie_filter") || "name"
@@ -33,7 +36,7 @@ function MovieModal(props: {
       const vars = {
         filter: filter,
         sortDirection: direction,
-        userId: "604bc6e57a7e0f143c3d33e2",
+        userId: profile.id,
       };
       // Get existing data from cache
       const data: any = cache.readQuery({
@@ -41,7 +44,6 @@ function MovieModal(props: {
         variables: vars,
         returnPartialData: true,
       });
-      console.log("here", data, upsertMovie);
       // Update cache with new item and existing data
       cache.writeQuery({
         query: GET_ALL_MOVIES,

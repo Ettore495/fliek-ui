@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./movie-subscription.scss";
 import { Toast } from "react-bootstrap";
 import { UPSERT_MOVIE_SUBSCRIPTION } from "../../../graphql/subscriptions/movie/upsert-movie";
-import { DELETE_MOVIE_SUBSCRIPTION } from "../../../graphql/subscriptions/movie/delete-movie";
 
 function MovieSubscription() {
   const { data, loading } = useSubscription(UPSERT_MOVIE_SUBSCRIPTION);
@@ -27,9 +26,11 @@ function MovieSubscription() {
         <Toast.Header>
           <strong className="mr-auto">Upsert</strong>
         </Toast.Header>
-        <Toast.Body>{`User created movie ${
-          !loading ? data.movieCreated.name : ""
-        }`}</Toast.Body>
+        <Toast.Body>
+          {!loading
+            ? `${data.movieCreated.user.username} added movie: ${data.movieCreated.movie.name}`
+            : ""}
+        </Toast.Body>
       </Toast>
     </div>
   );

@@ -15,6 +15,7 @@ import ReactStars from "react-rating-stars-component";
 import { UPSERT_RATING } from "../../graphql/mutations/rating/upsert-rating";
 import MoviesTableHeader from "./movies-table-header/movies-table-header";
 import MovieSubscription from "./movie-subscription/movie-upsert-subscription";
+import { getUserProfile } from "../../services/security-service";
 
 function Movies() {
   const [filter, setFilter] = useState<string>(
@@ -27,7 +28,7 @@ function Movies() {
     variables: {
       filter: filter,
       sortDirection: direction,
-      userId: "604bc6e57a7e0f143c3d33e2",
+      userId: getUserProfile().id,
     },
   });
 
@@ -70,7 +71,7 @@ function Movies() {
   const ratingChanged = (rating: number) => {
     upsertRating({
       variables: {
-        userId: "604bc6e57a7e0f143c3d33e2",
+        userId: getUserProfile().id,
         movieId: selectedMovie?.id,
         rating: rating,
       },
