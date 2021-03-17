@@ -11,11 +11,13 @@ import Cookies from "js-cookie";
 import { getUserProfile } from "../../services/security-service";
 import { IUserProfile } from "../../models/IUserProfile";
 
-function MovieModal(props: {
+interface IProps {
   movie?: IMovie;
   show: boolean;
   handleClose: Function;
-}) {
+}
+
+function MovieModal(props: IProps) {
   const isUpdating = props.movie?.id;
   const profile: IUserProfile = getUserProfile();
 

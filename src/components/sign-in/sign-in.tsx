@@ -47,8 +47,10 @@ function SignIn(props: IProps) {
         saveProfileToLocalStorage(result.data.login);
         props.setIsAuthenticated(true);
         localStorage.setItem("logged_in", "true");
-        // Redirect to home page
-        history.push("/home/movies");
+        // Redirect to home page after 0.500 secs to ensure tokens are set
+        setTimeout(() => {
+          history.push("/home/movies");
+        }, 500);
       })
       .catch((error) => {
         //alert("invalid username or password");

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { ReactComponent as DotsVerticalIcon } from "../../assets/icons/dots-vertical.svg";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trash.svg";
@@ -81,6 +81,13 @@ function Movies() {
 
   return (
     <div className="Movies">
+      {data && !data.getAllMovies.length ? (
+        <div className="no-movies">
+          No movies, start adding by clicking "Add movie" on the left
+        </div>
+      ) : (
+        ""
+      )}
       <MovieModal
         movie={selectedMovie}
         show={showMovieModal}
@@ -88,69 +95,73 @@ function Movies() {
           setShowMovieModal(false);
         }}
       />
-      <Table borderless hover>
-        <MoviesTableHeader
-          filter={filter}
-          direction={direction}
-          setFilter={setFilter}
-          setDirection={setDirection}
-          refetch={refetch}
-        />
-        <tbody>
-          {data &&
-            !loading &&
-            data.getAllMovies.map((movie: IMovie) => {
-              return (
-                <tr key={movie.id}>
-                  <td>{movie.name}</td>
-                  <td>{movie.releaseDate}</td>
-                  <td>{movie.duration}</td>
-                  <td>{movie.actors}</td>
-                  <td>{movie.averageRating}</td>
-                  <td
-                    onMouseEnter={() => {
-                      setSelectedMovie(movie);
-                    }}
-                  >
-                    <ReactStars
-                      count={5}
-                      value={getMovieRating(movie)}
-                      onChange={ratingChanged}
-                      size={24}
-                      activeColor="#ffd700"
-                    />
-                  </td>
-                  <td>
-                    <Dropdown>
-                      <Dropdown.Toggle as="div" className="options-dropdown">
-                        <DotsVerticalIcon />
-                      </Dropdown.Toggle>
+      {data && data.getAllMovies.length ? (
+        <Table borderless hover>
+          <MoviesTableHeader
+            filter={filter}
+            direction={direction}
+            setFilter={setFilter}
+            setDirection={setDirection}
+            refetch={refetch}
+          />
+          <tbody>
+            {data &&
+              !loading &&
+              data.getAllMovies.map((movie: IMovie) => {
+                return (
+                  <tr key={movie.id}>
+                    <td>{movie.name}</td>
+                    <td>{movie.releaseDate}</td>
+                    <td>{movie.duration}</td>
+                    <td>{movie.actors}</td>
+                    <td>{movie.averageRating}</td>
+                    <td
+                      onMouseEnter={() => {
+                        setSelectedMovie(movie);
+                      }}
+                    >
+                      <ReactStars
+                        count={5}
+                        value={getMovieRating(movie)}
+                        onChange={ratingChanged}
+                        size={24}
+                        activeColor="#ffd700"
+                      />
+                    </td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle as="div" className="options-dropdown">
+                          <DotsVerticalIcon />
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          onClick={() => {
-                            handleSelectMovie(movie);
-                          }}
-                        >
-                          <EditIcon />
-                          Edit
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => {
-                            handleDeleteMovie(movie);
-                          }}
-                        >
-                          <TrashIcon />
-                          Delete
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+                        <Dropdown.Menu>
+                          <Dropdown.Item
+                            onClick={() => {
+                              handleSelectMovie(movie);
+                            }}
+                          >
+                            <EditIcon />
+                            Edit
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              handleDeleteMovie(movie);
+                            }}
+                          >
+                            <TrashIcon />
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
