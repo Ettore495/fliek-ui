@@ -26,7 +26,7 @@ function MovieModal(props: {
     Cookies.get("sort_direction") || "asc"
   );
 
-  // Use react hook to create a movie, then update apollo cache so with created item
+  // Use react hook to create a movie, then update apollo cache with created item
   const [upsertMovie] = useMutation(UPSERT_MOVIE, {
     update: (cache, { data: { upsertMovie } }) => {
       // Set filter varibles

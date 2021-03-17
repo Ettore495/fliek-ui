@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./home.scss";
 import { Route } from "react-router-dom";
 import Movies from "../movies/movies";
@@ -7,7 +7,7 @@ import Sidebar from "./sidebar/sidebar";
 import { useSubscription } from "@apollo/client";
 import { DELETE_MOVIE_SUBSCRIPTION } from "../../graphql/subscriptions/movie/delete-movie";
 import { UPSERT_MOVIE_SUBSCRIPTION } from "../../graphql/subscriptions/movie/upsert-movie";
-import MovieSubscriptionAlert from "../movies/movie-subscription/movie-subscription-alert";
+import SubscriptionAlert from "../shared/subscription-alert/movie-subscription-alert";
 
 function Home() {
   const {
@@ -22,7 +22,7 @@ function Home() {
   const renderSubscriptionALert = () => {
     if (!deleteSubscribeLoading) {
       return (
-        <MovieSubscriptionAlert
+        <SubscriptionAlert
           data={deleteSubscribeData?.movieDeleted}
           loading={deleteSubscribeLoading}
           heading="Movie deleted"
@@ -33,7 +33,7 @@ function Home() {
 
     if (!upsertSubscribeLoading) {
       return (
-        <MovieSubscriptionAlert
+        <SubscriptionAlert
           data={upsertSubscribeData?.movieCreated}
           loading={upsertSubscribeLoading}
           heading={

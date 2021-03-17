@@ -10,7 +10,7 @@ interface Props {
   action: string;
 }
 
-function MovieSubscriptionAlert(props: Props) {
+function SubscriptionAlert(props: Props) {
   useEffect(() => {
     const element: HTMLElement | null = document.querySelector(
       `.toast-${props.action}`
@@ -41,4 +41,4 @@ function MovieSubscriptionAlert(props: Props) {
   );
 }
 
-export default MovieSubscriptionAlert;
+export default SubscriptionAlert;

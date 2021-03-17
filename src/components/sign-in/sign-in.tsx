@@ -5,10 +5,7 @@ import Logo from "../shared/logo/logo";
 import { useHistory } from "react-router-dom";
 import { LOGIN } from "../../graphql/mutations/auth/login";
 import "./sign-in.scss";
-import {
-  logout,
-  saveProfileToLocalStorage,
-} from "../../services/security-service";
+import { saveProfileToLocalStorage } from "../../services/security-service";
 
 interface Props {
   setIsAuthenticated: Function;
