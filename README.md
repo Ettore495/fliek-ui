@@ -98,3 +98,11 @@ I could probably write a small book under this section, but to keep it simple I 
 7. Average rating does not get updated automatically once a movie is rated
 
 There is plenty more, but this should suffice as an MVP!
+
+# Conclusion
+
+Thanks for the oppourtunity, I really enjoyed building this app regardless. I really like the concept of graphQL and can see why its so popular. It makes your app more efficient, quciker to develop and easier to maintain over the traditional REST aproach.
+
+React.js is also officially my new library of choice when building user interfaces, I still have lots to learn and lots to improve on but this was a great start.
+
+I had some issues with the apollo client but nothing that could not be resolved. Its also great, I really like the built in caching and central store feature.
