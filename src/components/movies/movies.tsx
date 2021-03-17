@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { ReactComponent as DotsVerticalIcon } from "../../assets/icons/dots-vertical.svg";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trash.svg";
