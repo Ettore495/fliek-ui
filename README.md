@@ -95,4 +95,6 @@ I could probably write a small book under this section, but to keep it simple I 
 
 6. Overall look and feel of the app is very barebones and not the prettiest.
 
+7. Average rating does not get updated automatically once a movie is rated
+
 There is plenty more, but this should suffice as an MVP!

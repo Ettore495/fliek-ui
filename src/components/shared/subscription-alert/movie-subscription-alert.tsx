@@ -15,7 +15,6 @@ function SubscriptionAlert(props: IProps) {
     const element: HTMLElement | null = document.querySelector(
       `.toast-${props.action}`
     );
-    console.log(element);
     if (!props.loading && element) {
       element.style.display = "block";
       var timer = setTimeout(() => {
