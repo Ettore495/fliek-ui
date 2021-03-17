@@ -7,11 +7,11 @@ import { LOGIN } from "../../graphql/mutations/auth/login";
 import "./sign-in.scss";
 import { saveProfileToLocalStorage } from "../../services/security-service";
 
-interface Props {
+interface IProps {
   setIsAuthenticated: Function;
 }
 
-function SignIn(props: Props) {
+function SignIn(props: IProps) {
   const history = useHistory();
 
   const [loginUser, { client }] = useMutation(LOGIN);

@@ -1,11 +1,11 @@
 import { ReactComponent as SortAsc } from "../../../assets/icons/sort-asc.svg";
 import { ReactComponent as SortDesc } from "../../../assets/icons/sort-desc.svg";
 
-interface Props {
+interface IProps {
   sortDirection: string;
 }
 
-function SortDirectionIcons(props: Props) {
+function SortDirectionIcons(props: IProps) {
   const renderSortIcon = () => {
     if (props.sortDirection === "asc") {
       return <SortAsc />;

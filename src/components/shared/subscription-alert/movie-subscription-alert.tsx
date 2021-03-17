@@ -3,14 +3,14 @@ import "./movie-subscription.scss";
 import { Toast } from "react-bootstrap";
 import { IMovieSubscriptionData } from "../../../models/IMovieSubscriptionData";
 
-interface Props {
+interface IProps {
   data: IMovieSubscriptionData;
   loading: boolean;
   heading: string;
   action: string;
 }
 
-function SubscriptionAlert(props: Props) {
+function SubscriptionAlert(props: IProps) {
   useEffect(() => {
     const element: HTMLElement | null = document.querySelector(
       `.toast-${props.action}`
